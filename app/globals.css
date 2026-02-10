@@ -1,0 +1,141 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, sans-serif;
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+@layer base {
+  :root {
+    --background: 210 20% 98%;
+    --foreground: 240 10% 10%;
+    --card: 0 0% 100%;
+    --card-foreground: 240 10% 10%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 10% 10%;
+    --primary: 240 10% 10%;
+    --primary-foreground: 0 0% 98%;
+    --secondary: 210 20% 96%;
+    --secondary-foreground: 240 10% 10%;
+    --muted: 210 20% 96%;
+    --muted-foreground: 240 5% 45%;
+    --accent: 210 20% 96%;
+    --accent-foreground: 240 10% 10%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 89.8%;
+    --input: 0 0% 89.8%;
+    --ring: 0 0% 3.9%;
+    --chart-1: 12 76% 61%;
+    --chart-2: 173 58% 39%;
+    --chart-3: 197 37% 24%;
+    --chart-4: 43 74% 66%;
+    --chart-5: 27 87% 67%;
+    --radius: 0.5rem;
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+
+    --lg-bg-primary: #f8fafc;
+    --lg-bg-secondary: #e7eeef;
+    --lg-text-primary: #1a1a2e;
+    --lg-text-secondary: rgba(0, 0, 0, 0.6);
+    --lg-border: rgba(0, 0, 0, 0.1);
+  }
+  .dark {
+    --background: 240 6% 6%;
+    --foreground: 0 0% 95%;
+    --card: 240 6% 6%;
+    --card-foreground: 0 0% 95%;
+    --popover: 240 6% 6%;
+    --popover-foreground: 0 0% 95%;
+    --primary: 0 0% 98%;
+    --primary-foreground: 240 10% 10%;
+    --secondary: 240 4% 15%;
+    --secondary-foreground: 0 0% 95%;
+    --muted: 240 4% 15%;
+    --muted-foreground: 0 0% 64%;
+    --accent: 240 4% 15%;
+    --accent-foreground: 0 0% 95%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 240 4% 15%;
+    --input: 240 4% 15%;
+    --ring: 0 0% 83.1%;
+    --chart-1: 220 70% 50%;
+    --chart-2: 160 60% 45%;
+    --chart-3: 30 80% 55%;
+    --chart-4: 280 65% 60%;
+    --chart-5: 340 75% 55%;
+    --sidebar-background: 240 5.9% 10%;
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+
+    --lg-bg-primary: #1b1b22;
+    --lg-bg-secondary: #0f0f14;
+    --lg-text-primary: #f0f0f5;
+    --lg-text-secondary: rgba(255, 255, 255, 0.6);
+    --lg-border: rgba(255, 255, 255, 0.1);
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+/* Liquid Glass Switch Clone Track */
+.switch-thumb-clone-inner::before {
+  content: "";
+  position: absolute;
+  left: var(--track-left, 0);
+  top: var(--track-top, 0);
+  width: 160px;
+  height: 67px;
+  border-radius: 33.5px;
+  background-color: var(--switch-track-color, #94949f77);
+}
+
+/* Liquid Glass Slider Clone Track */
+.slider-thumb-clone-inner::before {
+  content: "";
+  position: absolute;
+  left: var(--track-left, 0);
+  top: var(--track-top, 0);
+  width: 330px;
+  height: 14px;
+  border-radius: 7px;
+  background-color: rgba(148, 148, 159, 0.3);
+}
+
+.slider-thumb-clone-inner::after {
+  content: "";
+  position: absolute;
+  left: var(--track-left, 0);
+  top: var(--track-top, 0);
+  width: calc(330px * var(--fill-width, 40) / 100);
+  height: 14px;
+  border-radius: 7px;
+  background-color: #667eea;
+}
