@@ -37,7 +37,7 @@ function BackgroundContent() {
           </span>
         </div>
         <h3 className="text-[clamp(2rem,5vw,3.5rem)] font-extrabold leading-[0.95] mb-4">
-          Liquid Glass{" "}
+          Liquid Glass {" "}
           <span className="opacity-40">{"--"} Precision Lens</span>
         </h3>
         <div className="text-base leading-relaxed text-[var(--lg-text-secondary)]">
@@ -162,10 +162,12 @@ export function MagnifierDemo() {
     const shadowAlpha = sp.shadowAlpha.update(dt);
 
     glass.style.transform = `scale(${scale * scaleX}, ${scale * scaleY})`;
+    
+    // Apply outer shadow to the glass container
+    glass.style.boxShadow = `${shadowOffsetX}px ${shadowOffsetY}px ${shadowBlur}px rgba(0, 0, 0, ${shadowAlpha})`;
 
     const insetAlpha = shadowAlpha * 0.6;
     glassInner.style.boxShadow = `
-      ${shadowOffsetX}px ${shadowOffsetY}px ${shadowBlur}px rgba(0, 0, 0, ${shadowAlpha}),
       inset ${shadowOffsetX * 0.3}px ${shadowOffsetY * 0.4}px 16px rgba(0, 0, 0, ${insetAlpha}),
       inset ${-shadowOffsetX * 0.3}px ${-shadowOffsetY * 0.4}px 16px rgba(255, 255, 255, ${insetAlpha * 0.8})
     `;
@@ -175,7 +177,7 @@ export function MagnifierDemo() {
       s.velocityY *= 0.95;
     }
 
-    const allSettled =
+    const allSettled = 
       Object.values(sp).every((spring) => spring.isSettled()) &&
       Math.abs(s.velocityX) < 1 &&
       Math.abs(s.velocityY) < 1;
@@ -303,7 +305,7 @@ export function MagnifierDemo() {
   return (
     <div>
       <h2 className="text-xl font-semibold mb-4 flex items-center gap-2">
-        <span className="w-1 h-5 rounded-sm bg-gradient-to-b from-[#667eea] to-[#764ba2]" />
+        <span className="w-1 h-5 rounded-sm bg-gradient-to-b from-[#667eea] to-[#764ba2]" /> 
         Magnifying Glass
       </h2>
       <div
