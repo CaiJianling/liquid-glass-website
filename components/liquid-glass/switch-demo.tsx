@@ -61,6 +61,7 @@ export function SwitchDemo() {
     pointerDown: false,
     initialPointerX: 0,
     xDragRatio: 1,
+    isDragging: false,
   });
 
   const springsRef = useRef({
@@ -90,10 +91,14 @@ export function SwitchDemo() {
     sp.scale.setTarget(
       isActive ? CONFIG.THUMB_ACTIVE_SCALE : CONFIG.THUMB_REST_SCALE,
     );
-    sp.backgroundOpacity.setTarget(isActive ? 0.1 : 1);
+    // 关键：点击时，背景透明度降低，露出底部的液态玻璃滤镜
+    sp.backgroundOpacity.setTarget(isActive ? 0.05 : 1);
     sp.scaleRatio.setTarget(isActive ? 0.9 : 0.4);
 
     if (!s.pointerDown) {
+      sp.xRatio.setTarget(s.checked ? 1 : 0);
+    } else if (!s.isDragging) {
+      // 如果是点击触发的自动移动，也要更新 xRatio 目标
       sp.xRatio.setTarget(s.checked ? 1 : 0);
     }
 
@@ -186,6 +191,8 @@ export function SwitchDemo() {
     const onPointerMove = (e: MouseEvent | TouchEvent) => {
       if (!s.pointerDown) return;
       e.stopPropagation();
+      // 标记为拖拽状态
+      s.isDragging = true;
       const clientX = "touches" in e ? e.touches[0].clientX : e.clientX;
       const baseRatio = s.checked ? 1 : 0;
       const displacementX = clientX - s.initialPointerX;
@@ -202,7 +209,6 @@ export function SwitchDemo() {
 
     const onPointerUp = (e: MouseEvent | TouchEvent) => {
       if (!s.pointerDown) return;
-      s.pointerDown = false;
 
       const clientX =
         "changedTouches" in e
@@ -211,18 +217,40 @@ export function SwitchDemo() {
       const distance = Math.abs(clientX - s.initialPointerX);
 
       if (distance < 4) {
+        // 这是一个纯点击
         s.checked = !s.checked;
+        // 保持 s.pointerDown = true，交给下面的 setTimeout 逻辑处理延迟
+        setTimeout(() => {
+          s.pointerDown = false;
+          s.isDragging = false;
+          startAnimation();
+        }, 350);
       } else {
+        // 这是一个拖拽释放
         s.checked = s.xDragRatio > 0.5;
+        s.pointerDown = false; // 拖拽释放立即恢复
+        s.isDragging = false;
       }
       startAnimation();
     };
 
     const trackClick = (e: MouseEvent) => {
-      if (e.target === track) {
-        s.checked = !s.checked;
+      // 只有在不是拖拽结束的情况下（distance < 4 已经在 pointerUp 处理了）
+      // 或者直接点击轨道空白处时触发
+      if (s.pointerDown) return;
+
+      s.checked = !s.checked;
+      s.pointerDown = true; // 立即触发"液态玻璃"变形
+      s.isDragging = false;
+      
+      startAnimation();
+
+      // 延迟恢复：等待按钮移动并保持液态效果一段时间
+      // 这里的 300ms 应该略长于弹簧移动的主体时间
+      setTimeout(() => {
+        s.pointerDown = false;
         startAnimation();
-      }
+      }, 350);
     };
 
     thumb.addEventListener("mousedown", onPointerDown);
